@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Local photo demo",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "Mapbox demo (local token)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define-from-file=mapbox.local.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+[
+  {"id":"place_001","name":"Garden Coffee Demo","category":"Cafe","latitude":11.5523,"longitude":104.9227},
+  {"id":"place_002","name":"BKK Kitchen Demo","category":"Restaurant","latitude":11.5487,"longitude":104.9211},
+  {"id":"place_003","name":"Wat Langka Corner Demo","category":"Food spot","latitude":11.5514,"longitude":104.9235}
+]
