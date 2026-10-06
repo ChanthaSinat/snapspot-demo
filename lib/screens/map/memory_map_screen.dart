@@ -71,7 +71,9 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && !_loading) _load();
+    if (state == AppLifecycleState.resumed && !_loading && !_locationBusy) {
+      _load();
+    }
   }
 
   @override
@@ -142,6 +144,17 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
       _mapError = null;
     });
     try {
+      if (_groups.isNotEmpty) {
+        final place = _groups.first.place;
+        _viewport.moveTo(
+          CameraViewportState(
+            center: Point(
+              coordinates: Position(place.longitude, place.latitude),
+            ),
+            zoom: 14,
+          ),
+        );
+      }
       final manager = await map.annotations.createPointAnnotationManager();
       if (!mounted || revision != _revision) return;
       final groups = <String, PlaceMemories>{};
@@ -177,17 +190,6 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
           ),
         );
         groups[pin.id] = group;
-      }
-      if (_groups.isNotEmpty) {
-        final place = _groups.first.place;
-        _viewport.moveTo(
-          CameraViewportState(
-            center: Point(
-              coordinates: Position(place.longitude, place.latitude),
-            ),
-            zoom: 14,
-          ),
-        );
       }
     } catch (_) {
       if (mounted && revision == _revision) {
@@ -261,7 +263,7 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(
-                  '${PlaceMemories(group.place, rows).visitCount} visit days · ${rows.length} confirmed photos',
+                  '${PlaceMemories(group.place, rows).visitCount} visit day${PlaceMemories(group.place, rows).visitCount == 1 ? "" : "s"} · ${rows.length} confirmed photo${rows.length == 1 ? "" : "s"}',
                 ),
                 const Text(
                   'Visits are grouped by the photo date on this device.',
@@ -270,7 +272,7 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
                 for (final memory in rows)
                   Card(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         LocalPhotoView(assetId: memory.photoAssetId, size: 250),
                         ListTile(
@@ -329,7 +331,7 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
             ListTile(
               title: Text(group.place.name),
               subtitle: Text(
-                '${group.visitCount} visit days · ${group.memories.length} photos',
+                '${group.visitCount} visit day${group.visitCount == 1 ? "" : "s"} · ${group.memories.length} photo${group.memories.length == 1 ? "" : "s"}',
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -431,7 +433,7 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
                         ListTile(
                           title: Text(group.place.name),
                           subtitle: Text(
-                            '${group.visitCount} visit days · ${group.memories.length} photos',
+                            '${group.visitCount} visit day${group.visitCount == 1 ? "" : "s"} · ${group.memories.length} photo${group.memories.length == 1 ? "" : "s"}',
                           ),
                           onTap: () => _detail(group),
                         ),
@@ -493,7 +495,8 @@ class _MemoryMapScreenState extends State<MemoryMapScreen>
               ),
               IconButton(
                 tooltip: 'My location',
-                onPressed: _locationBusy || !MapboxConfig.isConfigured
+                onPressed:
+                    _locationBusy || !_ready || !MapboxConfig.isConfigured
                     ? null
                     : _recenter,
                 icon: _locationBusy

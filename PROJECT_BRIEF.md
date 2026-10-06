@@ -24,7 +24,7 @@ The sample preview remains available separately and never becomes verified user 
 - Phase 4 Matching: local Haversine radius/ranking; no remote venue service.
 - Phase 5 Verification: explicit confirmation, alternative catalog selection, skip and save errors.
 - Phase 6 Memories: SQLite confirmation, asset deduplication, grouped pins, local visit-day counts and removal.
-- Phase 7 Polish/testing: implemented error/empty states and automated checks; live map and physical-iPhone acceptance remain pending. See VALIDATION.md.
+- Phase 7 Polish/testing: implemented error/empty states and automated checks; live map tiles, recentering and grouped pins are validated on the simulator; physical-iPhone acceptance remains pending. See VALIDATION.md.
 
 ## Privacy and boundaries
 
@@ -36,4 +36,4 @@ The small venue catalog contains fictitious demonstration businesses. Matching o
 
 ## Acceptance still needed
 
-Provide a public Mapbox token to validate live tiles and real pin taps. On a physical iPhone, validate selected-photo access, selection changes/revocation, a genuine geotagged photo, absent GPS, unavailable cloud photo, denied location and relaunch persistence. Signing requires the user's Apple development team. No commit or push has been made.
+The public Mapbox token is configured in the ignored local file; live tiles, recentering and real grouped pin taps passed on the simulator. On a physical iPhone, validate selected-photo access, selection changes/revocation, a genuine geotagged photo, absent GPS, unavailable cloud photo, denied location and relaunch persistence. Signing requires the user's Apple development team. This agent did not commit or push; an external initial commit/rename appeared during the session (see VALIDATION.md).

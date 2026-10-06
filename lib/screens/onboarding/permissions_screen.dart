@@ -38,7 +38,7 @@ class PermissionsScreen extends StatelessWidget {
             const _AccessCard(
               icon: Icons.my_location_outlined,
               title: 'Current location',
-              description: 'Used only while the app is open to center the map. You can decline and still explore the sample memories.',
+              description: 'Used only while the app is open to center the map. You can decline and still add and view your memories.',
               footnote: 'Optional · While Using the App',
             ),
             const SizedBox(height: 24),

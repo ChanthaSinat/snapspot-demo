@@ -127,7 +127,7 @@ class _PhotoLibraryScreenState extends State<PhotoLibraryScreen>
             ),
           if (_permission != null && !_permission!.hasAccess) ...[
             const Text(
-              'Photo access is unavailable. You can still use the map.',
+              'Photo access is unavailable. In Settings, open Apps → Place Memory Map → Photos to allow selected photos. You can still use the map.',
             ),
             TextButton(
               onPressed: PhotoManager.openSetting,

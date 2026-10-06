@@ -6,7 +6,7 @@ A local Flutter demo that turns explicitly confirmed photo visits into a persona
 
 Phases 1–6 are implemented. The app opens a real-memory home with an empty state, not sample visits. Add photos → grant selected/full photo access → browse accessible images → review nearby local venues → Confirm / Choose another / Skip → saved place memories. The compass icon opens the separate, clearly labeled Phase 2 sample preview.
 
-Phase 7 adds permission/storage/map/photo error states, pagination, local removal, tests, simulator validation and these docs. Physical-iPhone permission/signing checks and live Mapbox validation remain required before calling the demo fully validated.
+Phase 7 adds permission/storage/map/photo error states, pagination, local removal, tests, simulator validation and these docs. Live Mapbox tiles, recentering and grouped photo-pin details were validated on the simulator. Physical-iPhone permission/signing checks remain required.
 
 ## Run in VS Code
 
@@ -47,7 +47,7 @@ Current location is optional and requested only by the location button in the re
 /Users/chanthasinat/Develop/flutter/bin/flutter build ios --simulator --debug
 ```
 
-The unit/widget suite covers matching radius/order/invalid GPS, verified-only grouping and visit days, SQLite confirmation/duplicate/removal behavior, onboarding, photo-consent navigation, sample separation, and pin rendering. The SQLite FFI dependency is test-only.
+The unit/widget suite covers matching radius/order/invalid GPS, verified-only grouping and visit days, SQLite confirmation/duplicate/removal behavior, onboarding, photo-consent navigation, sample separation, pin rendering, and foreground-location consent/denial/disabled-service/timeout behavior. The SQLite FFI dependency is test-only.
 
 Native integration test: use a test simulator, use the script to build/install the native test and add the synthetic fixture. When iOS asks, choose Limit Access and select only the fixture showing the street-food stall. Simulator permission grants alone did not establish PhotoKit authorization on this runtime. Never run this fixture test on a personal phone/library.
 
